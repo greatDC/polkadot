@@ -78,7 +78,7 @@ use extrinsic_store::Store as ExtrinsicStore;
 use parking_lot::Mutex;
 use polkadot_primitives::{Hash, Block, BlockId, BlockNumber, Header, SessionKey};
 use polkadot_primitives::parachain::{
-	Id as ParaId, Chain, DutyRoster, BlockData, Extrinsic as ParachainExtrinsic, CandidateReceipt,
+	Id as ParaId, Chain, DutyRoster, BlockData, Extrinsic as ParachainExtrinsic, CandidateReceipt, ValidatorIndex,
 	ParachainHost, AttestedCandidate, Statement as PrimitiveStatement, Message, OutgoingMessage, CollatorSignature
 };
 use primitives::{Pair, ed25519};
@@ -194,6 +194,8 @@ pub trait Network {
 pub struct GroupInfo {
 	/// Authorities meant to check validity of candidates.
 	pub validity_guarantors: HashSet<SessionKey>,
+	/// Mapping from validator index to public key.
+	pub index_mapping: HashMap<ValidatorIndex, SessionKey>,
 	/// Number of votes needed for validity.
 	pub needed_validity: usize,
 }
