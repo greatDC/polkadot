@@ -81,6 +81,10 @@ impl TableContext {
 			sender: self.local_index(),
 		}
 	}
+
+	fn index_to_id(&self, index: ValidatorIndex) -> Option<SessionKey> {
+		self.groups.iter().find_map(|(_, group)| group.index_mapping.get(&index)).cloned()
+	}
 }
 
 pub(crate) enum Validation {
@@ -547,6 +551,10 @@ impl SharedTable {
 		}
 
 		rx
+	}
+
+	pub fn index_to_id(&self, index: ValidatorIndex) -> Option<SessionKey> {
+		self.context.index_to_id(index)
 	}
 }
 
